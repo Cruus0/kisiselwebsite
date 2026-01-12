@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Oyun | Arda Murat Toprak</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Oyuna özel küçük ek stil */
+        #game-container { text-align: center; margin-top: 50px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 15px; }
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 400px; margin: 20px auto; }
+        .card { height: 80px; background: #1e293b; border: 2px solid #3b82f6; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; border-radius: 8px; }
+        .card.flipped { background: #3b82f6; color: white; }
+        #message { display: none; margin-top: 20px; color: #22c55e; font-weight: bold; font-size: 1.2rem; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo"><a href="index.html" style="color:white; text-decoration:none;">← Ana Sayfa</a></div>
+</nav>
+
+<section class="reveal active">
+    <h1>Blog: Ağ Teknolojilerinin Geleceği</h1>
+    <p></p>
+    <hr style="margin: 40px 0; border: 0.5px solid rgba(255,255,255,0.1);">
+    
+    <div id="game-container">
+        <h2>Kısa Bir Mola: Hafıza Testi</h2>
+        <p>Aynı teknoloji ikonlarını eşleştir ve gizli mesajı aç!</p>
+        <div class="grid" id="grid"></div>
+        <div id="message">Tebrikler! Oyunu Kazandınız <br> "Başarı, sabır ve dikkatle gelir!"</div>
+    </div>
+</section>
+
+<script>
+    const icons = ['🌐', '🔒', '💻', '📡', '🌐', '🔒', '💻', '📡']; // Kart çiftleri
+    let flippedCards = [];
+    let matchedCount = 0;
+
+    // Kartları karıştır
+    icons.sort(() => 0.5 - Math.random());
+
+    const grid = document.getElementById('grid');
+    icons.forEach((icon, index) => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+        card.dataset.icon = icon;
+        card.dataset.index = index;
+        card.addEventListener('click', flipCard);
+        grid.appendChild(card);
+    });
+
+    function flipCard() {
+        if (flippedCards.length < 2 && !this.classList.contains('flipped')) {
+            this.classList.add('flipped');
+            this.innerText = this.dataset.icon;
+            flippedCards.push(this);
+
+            if (flippedCards.length === 2) {
+                setTimeout(checkMatch, 500);
+            }
+        }
+    }
+
+    function checkMatch() {
+        const [card1, card2] = flippedCards;
+        if (card1.dataset.icon === card2.dataset.icon) {
+            matchedCount += 2;
+            if (matchedCount === icons.length) {
+                document.getElementById('message').style.display = 'block';
+            }
+        } else {
+            card1.classList.remove('flipped');
+            card1.innerText = '';
+            card2.classList.remove('flipped');
+            card2.innerText = '';
+        }
+        flippedCards = [];
+    }
+</script>
+</body>
+</html>
