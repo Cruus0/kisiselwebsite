@@ -35,6 +35,10 @@ body {
     backdrop-filter: blur(10px);
     z-index: 1000;
 }
+/* Menü linklerine tıklandığında başlığın navbar altında kalmaması için */
+section {
+    scroll-margin-top: 80px; /* Navbar yüksekliğin kadar bir boşluk bırakır */
+}
 
 .logo {
     font-weight: bold;
