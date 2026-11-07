@@ -497,13 +497,13 @@
             </a>
           </div>
 
-          <!-- Contact Form -->
+          <!-- Contact Form (Web3Forms - Direct Email Delivery) -->
           <div class="contact__form-wrapper">
-            <form class="contact-form" id="contact-form" action="https://formsubmit.co/ardatoprak058@gmail.com" method="POST" aria-label="İletişim formu">
-              <!-- FormSubmit config -->
-              <input type="hidden" name="_captcha" value="false">
-              <input type="hidden" name="_template" value="table">
-              <input type="hidden" name="_subject" value="Portfolyo Sitesinden Yeni Mesaj!">
+            <form class="contact-form" id="contact-form" action="https://api.web3forms.com/submit" method="POST" aria-label="İletişim formu">
+              <!-- Web3Forms Access Key -->
+              <input type="hidden" name="access_key" id="web3forms-key" value="5868ce0f-81ce-493d-9b6d-f2b301497fd7">
+              <input type="hidden" name="from_name" value="Portfolyo Ziyaretçisi">
+              <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
               
               <div class="contact-form__group">
                 <label for="contact-name" class="contact-form__label" data-i18n="form_name">İsim</label>
@@ -515,7 +515,7 @@
               </div>
               <div class="contact-form__group">
                 <label for="contact-subject" class="contact-form__label" data-i18n="form_subject">Konu</label>
-                <input type="text" id="contact-subject" name="subject" class="contact-form__input" placeholder="Mesajınızın konusu" data-i18n-placeholder="form_subject_placeholder" required>
+                <input type="text" id="contact-subject" name="subject" class="contact-form__input" placeholder="Mesajınızın konusu" data-i18n-placeholder="form_subject_placeholder">
               </div>
               <div class="contact-form__group">
                 <label for="contact-message" class="contact-form__label" data-i18n="form_message">Mesaj</label>
