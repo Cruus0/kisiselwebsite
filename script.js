@@ -1,213 +1,621 @@
-// 1. Yazı Yazma Efekti (Hocanın istediği gibi Front-end olarak güncellendi)
-const text = "Front-end Developer | Modern Web Arayüzleri";
-let index = 0;
-const typing = document.getElementById("typing");
+/**
+ * Arda Murat Toprak — Portfolio Scripts
+ * Modern, Dependency-Free ES6+ JavaScript
+ */
 
-function typeEffect() {
-    if (index < text.length) {
-        typing.innerHTML += text.charAt(index);
-        index++;
-        setTimeout(typeEffect, 70);
-    }
-}
-typeEffect();
+document.addEventListener('DOMContentLoaded', () => {
 
-// 2. Scroll Reveal (Aşağı Kaydırma Animasyonu)
-const reveals = document.querySelectorAll(".reveal");
-window.addEventListener("scroll", () => {
-    reveals.forEach(el => {
-        if (el.getBoundingClientRect().top < window.innerHeight - 100) {
-            el.classList.add("active");
-        }
+  /* ==========================================================================
+     1. LOADER DISMISS
+     ========================================================================== */
+  const loader = document.getElementById('loader');
+  if (loader) {
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        loader.classList.add('hidden');
+        setTimeout(() => {
+          loader.style.display = 'none';
+        }, 500);
+      }, 400);
     });
-});
 
-// 3. Dark Mode (Kara Ekran Modu)
-const darkBtn = document.getElementById("darkModeBtn");
-if (localStorage.getItem("dark") === "on") {
-    document.body.classList.add("dark");
-}
+    // Fallback if load already fired
+    if (document.readyState === 'complete') {
+      setTimeout(() => {
+        loader.classList.add('hidden');
+        setTimeout(() => {
+          loader.style.display = 'none';
+        }, 500);
+      }, 400);
+    }
+  }
 
-darkBtn.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-    localStorage.setItem("dark",
-        document.body.classList.contains("dark") ? "on" : "off"
-    );
-});
+  /* ==========================================================================
+     2. INTERNATIONALIZATION (i18n)
+     ========================================================================== */
+  let currentLang = 'tr';
 
-// 4. Mobil Menü
-const toggle = document.querySelector(".menu-toggle");
-const menu = document.querySelector(".menu");
-
-toggle.addEventListener("click", () => {
-    menu.classList.toggle("show");
-});
-
-// 5. Gelişmiş Dil Desteği (i18n) - TÜM SAYFAYI ÇEVİRİR
-const translations = {
+  const translations = {
     tr: {
-        nav_about: "Hakkımda", nav_game: "Oyun", nav_skills: "Yetkinlikler", nav_projects: "Projeler", nav_contact: "İletişim",
-        about_title: "Hakkımda", 
-        about_p1: "Merhaba, ben Arda Murat Toprak. İnternet ve Ağ Teknolojileri öğrencisiyim ve Front-end geliştirme alanında kendimi geliştiriyorum. Özellikle modern, kullanıcı odaklı ve mobil uyumlu web arayüzleri tasarlamaya ilgi duyuyorum.",
-        about_p2: "Eğitim sürecimde HTML, CSS ve JavaScript teknolojileri ile çeşitli projeler geliştirdim. Amacım, yalnızca çalışan değil aynı zamanda estetik ve sürdürülebilir web projeleri üretmektir.",
-        about_p3: "Front-end geliştirme alanında ilerlemeyi, yeni teknolojileri takip etmeyi ve öğrendiklerimi gerçek projelerde uygulamayı hedefliyorum.",
-        skills_title: "Yetkinlikler", 
-        edu_title: "Eğitim ve Hedefler",
-        edu_p1: "Şu anda İnternet ve Ağ Teknolojileri bölümünde eğitimime devam etmekteyim. Aldığım dersler sayesinde yazılım geliştirme süreçleri, algoritma mantığı ve web teknolojileri hakkında güçlü bir temel oluşturdum.",
-        edu_p2: "Kısa vadede Front-end geliştirme alanında uzmanlaşmayı, uzun vadede ise full-stack web geliştirici olarak profesyonel projelerde yer almayı hedefliyorum.",
-        projects_title: "Projeler",
-        proj1_title: "Kişisel Portfolyo Web Sitesi",
-        proj1_desc1: "HTML, CSS ve JavaScript kullanılarak geliştirilmiş, responsive tasarıma sahip kişisel portfolyo web sitesidir.",
-        proj1_desc2: "Bu projede modern tasarım prensipleri, kullanıcı deneyimi, dark mode, animasyonlar ve etkileşimli bileşenler kullanılmıştır.",
-        proj2_title: "To-Do Uygulaması (Örnek Proje)",
-        proj2_desc1: "JavaScript kullanılarak geliştirilen basit görev yönetim uygulamasıdır.",
-        proj2_desc2: "Bu projede DOM manipülasyonu, event yönetimi ve temel kullanıcı etkileşimleri uygulanmıştır.",
-        contact_title: "İletişim", 
-        contact_desc: "Benimle iletişime geçmek veya projelerim hakkında bilgi almak için aşağıdaki kanalları kullanabilirsiniz.",
-        contact_info: "Terminali açmak için 'T' tuşuna basın."
+      skip_link: "İçeriğe Geç",
+      nav_about: "Hakkımda",
+      nav_skills: "Yetenekler",
+      nav_education: "Eğitim",
+      nav_projects: "Projeler",
+      nav_game: "Oyun",
+      nav_contact: "İletişim",
+      
+      hero_greeting: "Merhaba, ben",
+      hero_subtitle_static: "Ben bir",
+      hero_description: "İnternet ve Ağ Teknolojileri öğrencisi olarak modern, erişilebilir ve performanslı web deneyimleri oluşturuyorum.",
+      hero_cta_projects: "Projelerimi Gör",
+      hero_cta_cv: "CV İndir",
+      hero_scroll: "Keşfet",
+      
+      about_tag: "Tanışalım",
+      about_title: "Hakkımda",
+      about_p1: "Merhaba! Ben <strong>Arda Murat Toprak</strong>, Nişantaşı Üniversitesi'nde <strong>İnternet ve Ağ Teknolojileri</strong> bölümünde öğrenim gören bir <strong>Front-End Developer</strong> adayıyım.",
+      about_p2: "Web teknolojilerine olan tutkum sayesinde HTML, CSS, JavaScript ve C# gibi dillerde kendimi sürekli geliştiriyorum. Temiz kod yazmayı, kullanıcı deneyimini ön planda tutmayı ve erişilebilir tasarımlar oluşturmayı hedefliyorum.",
+      about_p3: "Amacım, teknolojiyi kullanarak insanların hayatını kolaylaştıran, estetik ve fonksiyonel web çözümleri üretmektir. Sürekli öğrenmeye ve kendimi geliştirmeye devam ediyorum.",
+      about_detail_name: "İsim:",
+      about_detail_email: "E-posta:",
+      about_detail_location: "Konum:",
+      about_detail_location_val: "Türkiye",
+      about_detail_study: "Bölüm:",
+      about_detail_study_val: "İnternet ve Ağ Teknolojileri",
+      
+      stat_tech: "Teknoloji",
+      stat_projects: "Proje",
+      stat_lines: "Satır Kod",
+      stat_motivation: "Motivasyon",
+      
+      skills_tag: "Neler Yapabiliyorum",
+      skills_title: "Yeteneklerim",
+      skill_html_desc: "Semantik yapılar, erişilebilirlik ve SEO uyumlu markup.",
+      skill_css_desc: "Responsive tasarım, Flexbox, Grid, animasyonlar ve modern layout.",
+      skill_js_desc: "DOM manipülasyonu, ES6+, async programlama ve interaktif deneyimler.",
+      skill_csharp_desc: "OOP prensipleri, .NET framework ve uygulama geliştirme.",
+      
+      edu_tag: "Akademik Yolculuğum",
+      edu_title: "Eğitim",
+      edu_badge_current: "Devam Ediyor",
+      edu_uni_name: "Nişantaşı Üniversitesi",
+      edu_uni_dept: "İnternet ve Ağ Teknolojileri — Ön Lisans",
+      edu_uni_date: "2024 — Devam Ediyor",
+      edu_uni_desc: "Web geliştirme, ağ altyapıları ve bilgi teknolojileri alanında kapsamlı eğitim. Front-end teknolojilerine odaklanarak projeler geliştiriyorum. Mezuniyet sonrası alanımda kariyer yapmayı ve sürekli öğrenmeyi hedefliyorum.",
+      edu_tag_network: "Ağ Teknolojileri",
+      edu_badge_goal: "Hedef",
+      edu_goal_title: "Sürekli Gelişim",
+      edu_goal_subtitle: "React, TypeScript ve modern frameworkler",
+      edu_goal_date: "2025 ve Sonrası",
+      edu_goal_desc: "React, TypeScript gibi modern teknolojileri öğrenmeye devam ederek full-stack geliştirici olmayı hedefliyorum. Açık kaynak projelere katkıda bulunmak ve sektörde deneyim kazanmak önceliklerim arasında.",
+      
+      proj_tag: "Neler Yaptım",
+      proj_title: "Projelerim",
+      proj_view: "Projeyi İncele",
+      proj_portfolio_title: "Kişisel Portfolio",
+      proj_portfolio_desc: "Modern tasarım, glassmorphism efektleri, çoklu dil desteği ve tamamen responsive kişisel portföy web sitesi. Vanilla JS ile geliştirildi.",
+      proj_live: "Canlı Demo",
+      proj_code: "Kaynak Kod",
+      proj_play: "Oyna",
+      proj_memory_title: "Hafıza Oyunu",
+      proj_memory_desc: "Kart eşleştirme mekanikli interaktif hafıza oyunu. Skor takibi, zamanlayıcı ve animasyonlar ile zenginleştirilmiş kullanıcı deneyimi.",
+      proj_soon_title: "Yakında...",
+      proj_soon_desc: "Yeni projeler üzerinde çalışıyorum. Bu alan yakında güncellenecek. Gelişmeleri takip etmek için bağlantıda kalın!",
+      
+      contact_tag: "Bana Ulaşın",
+      contact_title: "İletişim",
+      contact_email: "E-posta",
+      contact_uni_email: "Üniversite E-posta",
+      contact_phone: "Telefon",
+      contact_github_val: "Profili Ziyaret Et",
+      form_name: "İsim",
+      form_name_placeholder: "Adınız Soyadınız",
+      form_email: "E-posta",
+      form_email_placeholder: "ornek@mail.com",
+      form_subject: "Konu",
+      form_subject_placeholder: "Mesajınızın konusu",
+      form_message: "Mesaj",
+      form_message_placeholder: "Mesajınızı buraya yazın...",
+      form_submit: "Mesaj Gönder",
+      
+      footer_desc: "Modern ve erişilebilir web deneyimleri oluşturan Front-End Developer adayı.",
+      footer_nav_title: "Hızlı Erişim",
+      footer_social_title: "Sosyal Medya",
+      footer_copyright: "© 2026 Arda Murat Toprak. Tüm hakları saklıdır.",
+      footer_made: "ile Türkiye'den yapıldı"
     },
     en: {
-        nav_about: "About Me", nav_game: "Game", nav_skills: "Skills", nav_projects: "Projects", nav_contact: "Contact",
-        about_title: "About Me", 
-        about_p1: "Hello, I am Arda Murat Toprak. I am a Network Technologies student and focusing on Front-end development. I am especially interested in designing modern, user-oriented and mobile-compatible web interfaces.",
-        about_p2: "During my education, I developed various projects with HTML, CSS and JavaScript technologies. My goal is to produce not only working but also aesthetic and sustainable web projects.",
-        about_p3: "I aim to advance in the field of Front-end development, follow new technologies and apply what I have learned in real projects.",
-        skills_title: "Skills", 
-        edu_title: "Education and Goals",
-        edu_p1: "I am currently continuing my education in the Internet and Network Technologies department. Thanks to the courses I took, I created a strong foundation in software development processes, algorithm logic and web technologies.",
-        edu_p2: "I aim to specialize in Front-end development in the short term and to take part in professional projects as a full-stack web developer in the long term.",
-        projects_title: "Projects",
-        proj1_title: "Personal Portfolio Website",
-        proj1_desc1: "It is a personal portfolio website with a responsive design developed using HTML, CSS and JavaScript.",
-        proj1_desc2: "Modern design principles, user experience, dark mode, animations and interactive components were used in this project.",
-        proj2_title: "To-Do App (Sample Project)",
-        proj2_desc1: "A simple task management application developed using JavaScript.",
-        proj2_desc2: "In this project, DOM manipulation, event management and basic user interactions were implemented.",
-        contact_title: "Contact", 
-        contact_desc: "You can use the channels below to contact me or get information about my projects.",
-        contact_info: "Press 'T' to open terminal."
+      skip_link: "Skip to Content",
+      nav_about: "About",
+      nav_skills: "Skills",
+      nav_education: "Education",
+      nav_projects: "Projects",
+      nav_game: "Game",
+      nav_contact: "Contact",
+      
+      hero_greeting: "Hello, I am",
+      hero_subtitle_static: "I am a",
+      hero_description: "As an Internet & Network Technologies student, I create modern, accessible, and high-performance web experiences.",
+      hero_cta_projects: "View Projects",
+      hero_cta_cv: "Download CV",
+      hero_scroll: "Explore",
+      
+      about_tag: "Get to know me",
+      about_title: "About Me",
+      about_p1: "Hello! I am <strong>Arda Murat Toprak</strong>, an aspiring <strong>Front-End Developer</strong> studying <strong>Internet & Network Technologies</strong> at Nişantaşı University.",
+      about_p2: "Driven by my passion for web technologies, I continuously improve in HTML, CSS, JavaScript, and C#. My priority is writing clean code, user experience, and accessible design.",
+      about_p3: "My goal is to create aesthetic and functional web solutions that make people's lives easier using technology. I am committed to lifelong learning.",
+      about_detail_name: "Name:",
+      about_detail_email: "Email:",
+      about_detail_location: "Location:",
+      about_detail_location_val: "Turkey",
+      about_detail_study: "Department:",
+      about_detail_study_val: "Internet & Network Technologies",
+      
+      stat_tech: "Technologies",
+      stat_projects: "Projects",
+      stat_lines: "Lines of Code",
+      stat_motivation: "Motivation",
+      
+      skills_tag: "What I Can Do",
+      skills_title: "My Skills",
+      skill_html_desc: "Semantic structure, accessibility, and SEO-friendly markup.",
+      skill_css_desc: "Responsive design, Flexbox, Grid, animations, and modern layout.",
+      skill_js_desc: "DOM manipulation, ES6+, async programming, and interactive experiences.",
+      skill_csharp_desc: "OOP principles, .NET framework, and application development.",
+      
+      edu_tag: "My Academic Journey",
+      edu_title: "Education",
+      edu_badge_current: "Present",
+      edu_uni_name: "Nişantaşı University",
+      edu_uni_dept: "Internet & Network Technologies — Associate Degree",
+      edu_uni_date: "2024 — Present",
+      edu_uni_desc: "Comprehensive education in web development, network infrastructure, and IT. Actively building projects with a focus on modern front-end tech.",
+      edu_tag_network: "Network Technologies",
+      edu_badge_goal: "Goal",
+      edu_goal_title: "Continuous Growth",
+      edu_goal_subtitle: "React, TypeScript and modern frameworks",
+      edu_goal_date: "2025 and Beyond",
+      edu_goal_desc: "Advancing toward becoming a full-stack developer by mastering React, TypeScript, and modern ecosystems while contributing to open-source.",
+      
+      proj_tag: "What I've Built",
+      proj_title: "Featured Projects",
+      proj_view: "Explore Project",
+      proj_portfolio_title: "Personal Portfolio",
+      proj_portfolio_desc: "Responsive personal portfolio website featuring glassmorphism effects, multi-language support, and clean vanilla JS architecture.",
+      proj_live: "Live Demo",
+      proj_code: "Source Code",
+      proj_play: "Play",
+      proj_memory_title: "Memory Game",
+      proj_memory_desc: "Interactive card-matching memory game with score tracking, timer, and smooth card flipping animations.",
+      proj_soon_title: "Coming Soon...",
+      proj_soon_desc: "Working on exciting new projects. This area will be updated soon. Stay tuned!",
+      
+      contact_tag: "Get In Touch",
+      contact_title: "Contact",
+      contact_email: "Email",
+      contact_uni_email: "University Email",
+      contact_phone: "Phone",
+      contact_github_val: "Visit Profile",
+      form_name: "Name",
+      form_name_placeholder: "Your Full Name",
+      form_email: "Email",
+      form_email_placeholder: "your@email.com",
+      form_subject: "Subject",
+      form_subject_placeholder: "Subject of message",
+      form_message: "Message",
+      form_message_placeholder: "Write your message here...",
+      form_submit: "Send Message",
+      
+      footer_desc: "Aspiring Front-End Developer creating modern and accessible web experiences.",
+      footer_nav_title: "Quick Links",
+      footer_social_title: "Social Media",
+      footer_copyright: "© 2026 Arda Murat Toprak. All rights reserved.",
+      footer_made: "made with heart in Turkey"
     }
-};
+  };
 
-const langBtn = document.getElementById("langBtn");
-let currentLang = "tr";
+  const langToggleBtn = document.getElementById('lang-toggle');
+  const langCurrentEl = document.getElementById('lang-current');
+  const langOtherEl = document.getElementById('lang-other');
 
-langBtn.addEventListener("click", () => {
-    currentLang = currentLang === "tr" ? "en" : "tr";
-    langBtn.innerText = currentLang === "tr" ? "EN" : "TR";
+  function updateLanguage(lang) {
+    currentLang = lang;
+    const dict = translations[lang];
 
-    // Sayfadaki tüm data-i18n etiketlerini bulur ve çevirir
-    document.querySelectorAll("[data-i18n]").forEach(el => {
-        const key = el.getAttribute("data-i18n");
-        if (translations[currentLang][key]) {
-            el.innerText = translations[currentLang][key];
-        }
+    // Update text content
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (dict[key]) {
+        el.innerHTML = dict[key];
+      }
     });
-});
 
-// 6. Yetkinlik Bar Animasyonu
-function animateSkill(barSelector, percentId, target, duration) {
-    const bar = document.querySelector(barSelector);
-    const percentEl = document.getElementById(percentId);
-    let startTime = null;
-    let lastPercent = 0;
+    // Update placeholders
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (dict[key]) {
+        el.setAttribute('placeholder', dict[key]);
+      }
+    });
 
-    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-
-    function animate(time) {
-        if (!startTime) startTime = time;
-        const elapsed = time - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const eased = easeOutCubic(progress);
-        const value = Math.round(eased * target);
-
-        bar.style.width = value + "%";
-        if (value !== lastPercent) {
-            percentEl.textContent = value + "%";
-            lastPercent = value;
-        }
-        if (progress < 1) requestAnimationFrame(animate);
+    if (langCurrentEl && langOtherEl) {
+      langCurrentEl.textContent = lang.toUpperCase();
+      langOtherEl.textContent = lang === 'tr' ? 'EN' : 'TR';
     }
-    requestAnimationFrame(animate);
-}
 
-window.addEventListener("load", () => {
-    setTimeout(() => {
-        animateSkill(".fill.html", "htmlPercent", 90, 3500);
-        animateSkill(".fill.css", "cssPercent", 80, 3500);
-        animateSkill(".fill.js", "jsPercent", 70, 3500);
-        animateSkill(".fill.c", "cPercent", 85, 3000)
-    }, 400);
-});
+    document.documentElement.setAttribute('lang', lang);
 
-// 7. Particles.js Ayarları
-particlesJS("particles-js", {
-    "particles": {
-        "number": { "value": 80 },
-        "color": { "value": "#3b82f6" },
-        "shape": { "type": "circle" },
-        "opacity": { "value": 0.5 },
-        "size": { "value": 3 },
-        "line_linked": {
-            "enable": true,
-            "distance": 150,
-            "color": "#3b82f6",
-            "opacity": 0.4,
-            "width": 1
-        },
-        "move": { "enable": true, "speed": 2 }
+    // Restart typing effect with new words
+    initTyping();
+  }
+
+  if (langToggleBtn) {
+    langToggleBtn.addEventListener('click', () => {
+      const nextLang = currentLang === 'tr' ? 'en' : 'tr';
+      updateLanguage(nextLang);
+    });
+  }
+
+  /* ==========================================================================
+     3. TYPING EFFECT
+     ========================================================================== */
+  const typedEl = document.getElementById('typed-text');
+  let typingTimeout = null;
+
+  const roles = {
+    tr: [
+      "Front-End Developer",
+      "Ağ Teknolojileri Öğrencisi",
+      "Modern Web Arayüz Tasarımcısı",
+      "UI/UX Meraklısı"
+    ],
+    en: [
+      "Front-End Developer",
+      "Network Tech Student",
+      "Modern Web Interface Creator",
+      "UI/UX Enthusiast"
+    ]
+  };
+
+  let roleIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+
+  function initTyping() {
+    if (typingTimeout) clearTimeout(typingTimeout);
+    roleIndex = 0;
+    charIndex = 0;
+    isDeleting = false;
+    typeLoop();
+  }
+
+  function typeLoop() {
+    if (!typedEl) return;
+    const currentRoles = roles[currentLang] || roles.tr;
+    const currentText = currentRoles[roleIndex % currentRoles.length];
+
+    if (isDeleting) {
+      typedEl.textContent = currentText.substring(0, charIndex - 1);
+      charIndex--;
+    } else {
+      typedEl.textContent = currentText.substring(0, charIndex + 1);
+      charIndex++;
+    }
+
+    let delay = isDeleting ? 35 : 70;
+
+    if (!isDeleting && charIndex === currentText.length) {
+      delay = 2000; // Pause at full word
+      isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      roleIndex++;
+      delay = 400; // Pause before new word
+    }
+
+    typingTimeout = setTimeout(typeLoop, delay);
+  }
+
+  initTyping();
+
+  /* ==========================================================================
+     4. NAVBAR SCROLL & ACTIVE LINK HIGHLIGHTING
+     ========================================================================== */
+  const navbar = document.getElementById('navbar');
+  const navLinks = document.querySelectorAll('.navbar__link');
+  const sections = document.querySelectorAll('section[id]');
+  let lastScrollY = window.scrollY;
+
+  window.addEventListener('scroll', () => {
+    const currentY = window.scrollY;
+
+    // Background blur & shadow on scroll
+    if (navbar) {
+      if (currentY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+
+      // Hide navbar when scrolling down fast, show on scroll up
+      if (currentY > 300 && currentY > lastScrollY && !navbar.classList.contains('nav-hidden')) {
+        navbar.classList.add('nav-hidden');
+      } else if (currentY < lastScrollY && navbar.classList.contains('nav-hidden')) {
+        navbar.classList.remove('nav-hidden');
+      }
+    }
+    lastScrollY = currentY;
+
+    // Active Section Link
+    let currentSectionId = '';
+    sections.forEach(sec => {
+      const top = sec.offsetTop - 120;
+      const height = sec.offsetHeight;
+      if (currentY >= top && currentY < top + height) {
+        currentSectionId = sec.getAttribute('id');
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${currentSectionId}`) {
+        link.classList.add('active');
+      }
+    });
+
+    // Back to top visibility
+    if (backToTopBtn) {
+      if (currentY > 400) {
+        backToTopBtn.classList.add('visible');
+      } else {
+        backToTopBtn.classList.remove('visible');
+      }
+    }
+  }, { passive: true });
+
+  /* ==========================================================================
+     5. MOBILE HAMBURGER MENU
+     ========================================================================== */
+  const hamburger = document.getElementById('hamburger');
+  const navLinksContainer = document.getElementById('nav-links');
+
+  if (hamburger && navLinksContainer) {
+    hamburger.addEventListener('click', () => {
+      const isOpen = hamburger.classList.toggle('open');
+      navLinksContainer.classList.toggle('show');
+      hamburger.setAttribute('aria-expanded', isOpen);
+    });
+
+    // Close when a link is clicked
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        navLinksContainer.classList.remove('show');
+        hamburger.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+      if (!navbar.contains(e.target) && navLinksContainer.classList.contains('show')) {
+        hamburger.classList.remove('open');
+        navLinksContainer.classList.remove('show');
+        hamburger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  /* ==========================================================================
+     6. INTERSECTION OBSERVER (SKILLS & STATS & REVEAL)
+     ========================================================================== */
+  // 6A: Skill bars animated on scroll
+  const skillBars = document.querySelectorAll('.skill-card__fill');
+  if (skillBars.length > 0) {
+    const skillsObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const bar = entry.target;
+          const targetWidth = bar.getAttribute('data-width') || '80';
+          bar.style.width = targetWidth + '%';
+          observer.unobserve(bar);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    skillBars.forEach(bar => skillsObserver.observe(bar));
+  }
+
+  // 6B: Stats counter animated on scroll
+  const statNumbers = document.querySelectorAll('.stat-card__number[data-count]');
+  if (statNumbers.length > 0) {
+    const statsObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = parseInt(el.getAttribute('data-count'), 10);
+          animateCounter(el, target, 1600);
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    statNumbers.forEach(num => statsObserver.observe(num));
+  }
+
+  function animateCounter(el, target, duration) {
+    const startTime = performance.now();
+    function update(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // easeOutExpo
+      const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      const current = Math.floor(eased * target);
+      el.textContent = current;
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      } else {
+        el.textContent = target;
+      }
+    }
+    requestAnimationFrame(update);
+  }
+
+  /* ==========================================================================
+     7. BACK TO TOP
+     ========================================================================== */
+  const backToTopBtn = document.getElementById('back-to-top');
+  if (backToTopBtn) {
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
+
+  /* ==========================================================================
+     8. CONTACT FORM SUBMISSION (Cosmetic Interaction)
+     ========================================================================== */
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const submitBtn = contactForm.querySelector('.contact-form__submit');
+      const originalText = submitBtn.innerHTML;
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span>⏳ Gönderiliyor...</span>`;
+
+      setTimeout(() => {
+        submitBtn.innerHTML = `<span>✓ Mesajınız Alındı! Teşekkürler.</span>`;
+        submitBtn.style.background = 'linear-gradient(135deg, #10b981, #00d4aa)';
+        contactForm.reset();
+
+        setTimeout(() => {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+          submitBtn.style.background = '';
+        }, 3500);
+      }, 1000);
+    });
+  }
+
+  /* ==========================================================================
+     9. TERMINAL EASTER EGG (Press 'T' to open)
+     ========================================================================== */
+  const terminal = document.getElementById('terminal');
+  const terminalClose = document.getElementById('terminal-close');
+  const terminalInput = document.getElementById('terminal-input');
+  const terminalOutput = document.getElementById('terminal-output');
+
+  function openTerminal() {
+    if (!terminal) return;
+    terminal.removeAttribute('hidden');
+    terminal.setAttribute('aria-hidden', 'false');
+    if (terminalInput) {
+      terminalInput.focus();
+    }
+  }
+
+  function closeTerminal() {
+    if (!terminal) return;
+    terminal.setAttribute('hidden', '');
+    terminal.setAttribute('aria-hidden', 'true');
+  }
+
+  if (terminalClose) {
+    terminalClose.addEventListener('click', closeTerminal);
+  }
+
+  window.addEventListener('keydown', (e) => {
+    // Avoid triggering when focused on input/textarea
+    const tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+    if (tag === 'input' || tag === 'textarea') {
+      if (e.key === 'Escape') {
+        closeTerminal();
+      }
+      return;
+    }
+
+    if (e.key.toLowerCase() === 't') {
+      e.preventDefault();
+      if (terminal.hasAttribute('hidden')) {
+        openTerminal();
+      } else {
+        closeTerminal();
+      }
+    }
+  });
+
+  const commands = {
+    help: () => `
+Mevcut Komutlar:
+  • whoami    : Profil bilgisi
+  • skills    : Yetkinlik özeti
+  • projects  : Projeler listesi
+  • contact   : İletişim bilgileri
+  • edu       : Eğitim bilgisi
+  • clear     : Ekranı temizle
+  • theme     : Tema bilgisi
+  • date      : Tarih ve saat
+  • matrix    : Matrix modu
+  • exit      : Terminali kapat
+`,
+    whoami: () => "Arda Murat Toprak — Front-End Developer & Nişantaşı Üniv. İnternet ve Ağ Teknolojileri Öğrencisi.",
+    skills: () => "HTML5: %90 | CSS3: %80 | JavaScript: %70 | C#: %85",
+    projects: () => "1. Kişisel Portfolio (cruus0.github.io/kisiselwebsite/)\n2. Hafıza Oyunu (blog.html)\n3. Modern Web Projeleri (Yakında)",
+    contact: () => "E-posta: ardatoprak058@gmail.com\nLinkedIn: linkedin.com/in/ardatoprakk/\nTel: +90 539 691 1288",
+    edu: () => "Nişantaşı Üniversitesi — İnternet ve Ağ Teknolojileri (2024 - Devam)",
+    theme: () => "Theme: Midnight Aurora (Electric Indigo #6c63ff + Teal #00d4aa)",
+    date: () => new Date().toLocaleString('tr-TR'),
+    matrix: () => "Wake up, Neo... Follow the white rabbit. 🐇",
+    clear: () => {
+      terminalOutput.innerHTML = '';
+      return '';
     },
-    "interactivity": {
-        "events": { "onhover": { "enable": true, "mode": "grab" } }
+    exit: () => {
+      closeTerminal();
+      return '';
     }
-});
+  };
 
-// 8. Terminal Sistemi
-const termInput = document.getElementById("term-input");
-const termHistory = document.getElementById("term-history");
-const terminalDiv = document.getElementById("terminal");
+  if (terminalInput) {
+    // Initial welcome message
+    terminalOutput.innerHTML = `<div>&gt; Arda Toprak Terminal v2.0</div><div>&gt; Komut listesi için <span style="color:#00d4aa;">'help'</span> yazabilirsiniz.</div><br>`;
 
-window.addEventListener("keydown", (e) => {
-    if (document.activeElement === termInput) {
-        if (e.key === "Escape") terminalDiv.style.display = "none";
-        return; 
-    }
-    if (e.key.toLowerCase() === "t") {
-        e.preventDefault();
-        terminalDiv.style.display = terminalDiv.style.display === "none" ? "block" : "none";
-        if (terminalDiv.style.display === "block") setTimeout(() => termInput.focus(), 10);
-    }
-});
+    terminalInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const cmd = terminalInput.value.trim().toLowerCase();
+        terminalInput.value = '';
 
-termInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-        const command = termInput.value.toLowerCase().trim();
-        let response = "";
+        if (!cmd) return;
 
-        if (command === "help") {
-            response = "Komutlar: help, projects, skills, clear, exit, whoami";
-        } else if (command === "projects") {
-            response = "Portfolyo, To-Do App, Network Dashboard";
-        } else if (command === "skills") {
-            response = "HTML, CSS, JS, C#, Network Protocols";
-        } else if (command === "whoami") {
-            response = "Arda Murat Toprak - Network & Front-end Developer";
-        } else if (command === "clear") {
-            termHistory.innerHTML = "";
-            termInput.value = "";
-            return;
-        } else if (command === "exit") {
-            terminalDiv.style.display = "none";
-            termInput.value = "";
-            return;
+        const cmdDiv = document.createElement('div');
+        cmdDiv.style.color = '#6c63ff';
+        cmdDiv.textContent = `visitor@arda:~$ ${cmd}`;
+        terminalOutput.appendChild(cmdDiv);
+
+        let outputText = '';
+        if (commands[cmd]) {
+          outputText = commands[cmd]();
         } else {
-            response = "Komut bulunamadı: " + command;
+          outputText = `Komut bulunamadı: '${cmd}'. Yardım için 'help' yazın.`;
         }
 
-        const newLog = document.createElement("div");
-        newLog.innerHTML = `<div>$ ${command}</div><div style="color: #888;">> ${response}</div>`;
-        termHistory.appendChild(newLog);
-        termHistory.scrollTop = termHistory.scrollHeight;
-        termInput.value = "";
-    }
+        if (outputText) {
+          const respDiv = document.createElement('div');
+          respDiv.style.whiteSpace = 'pre-wrap';
+          respDiv.textContent = outputText;
+          terminalOutput.appendChild(respDiv);
+        }
+
+        const body = document.getElementById('terminal-body');
+        if (body) body.scrollTop = body.scrollHeight;
+      }
+    });
+  }
+
 });

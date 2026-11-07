@@ -1,82 +1,343 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <title>Oyun | Arda Murat Toprak</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        
-        #game-container { text-align: center; margin-top: 50px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 15px; }
-        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 400px; margin: 20px auto; }
-        .card { height: 80px; background: #1e293b; border: 2px solid #3b82f6; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; border-radius: 8px; }
-        .card.flipped { background: #3b82f6; color: white; }
-        #message { display: none; margin-top: 20px; color: #22c55e; font-weight: bold; font-size: 1.2rem; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hafıza Oyunu | Arda Murat Toprak</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .game-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-top: calc(var(--nav-height) + 20px);
+    }
+
+    .game-container {
+      max-width: 640px;
+      margin: 20px auto 60px;
+      padding: 32px 24px;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+
+    .game-stats {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin: 24px 0;
+      padding: 16px;
+      background: var(--bg-surface);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-light);
+    }
+
+    .game-stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+    .game-stat-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+    }
+    .game-stat-val {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent-secondary);
+    }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin: 24px 0;
+      perspective: 1000px;
+    }
+
+    .memory-card {
+      aspect-ratio: 1 / 1;
+      background: #181828;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s, border-color 0.3s;
+      position: relative;
+    }
+
+    .memory-card:hover:not(.flipped):not(.matched) {
+      transform: translateY(-4px) scale(1.02);
+      border-color: var(--accent-primary);
+      box-shadow: 0 8px 20px rgba(108, 99, 255, 0.3);
+    }
+
+    .memory-card.flipped {
+      background: rgba(108, 99, 255, 0.25);
+      border-color: var(--accent-primary);
+      transform: rotateY(180deg);
+    }
+
+    .memory-card.matched {
+      background: rgba(0, 212, 170, 0.2);
+      border-color: var(--accent-secondary);
+      cursor: default;
+      animation: pulseMatch 0.5s ease;
+    }
+
+    @keyframes pulseMatch {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+
+    .memory-card .card-content {
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .memory-card.flipped .card-content,
+    .memory-card.matched .card-content {
+      opacity: 1;
+      transform: rotateY(180deg);
+    }
+
+    .memory-card .card-back {
+      position: absolute;
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.25);
+    }
+    .memory-card.flipped .card-back,
+    .memory-card.matched .card-back {
+      display: none;
+    }
+
+    /* Victory Modal */
+    .victory-box {
+      display: none;
+      padding: 24px;
+      margin-top: 20px;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(0, 212, 170, 0.08));
+      border: 1px solid var(--accent-secondary);
+      border-radius: var(--radius-md);
+      animation: fadeIn 0.5s ease;
+    }
+    .victory-box.show {
+      display: block;
+    }
+    .victory-title {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-secondary);
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 500px) {
+      .game-grid {
+        gap: 8px;
+      }
+      .memory-card {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
 </head>
-<body>
+<body class="game-page">
 
-<nav class="navbar">
-    <div class="logo"><a href="index.html" style="color:white; text-decoration:none;">← Ana Sayfa</a></div>
-</nav>
-
-<section class="reveal active">
-    <h1>Blog: Ağ Teknolojilerinin Geleceği</h1>
-    <p></p>
-    <hr style="margin: 40px 0; border: 0.5px solid rgba(255,255,255,0.1);">
-    
-    <div id="game-container">
-        <h2>Kısa Bir Mola: Hafıza Testi</h2>
-        <p>Aynı teknoloji ikonlarını eşleştir ve gizli mesajı aç!</p>
-        <div class="grid" id="grid"></div>
-        <div id="message">Tebrikler! Oyunu Kazandınız <br> "Başarı, sabır ve dikkatle gelir!"</div>
+  <!-- Navbar -->
+  <header class="navbar scrolled">
+    <div class="navbar__inner container">
+      <a href="index.html" class="navbar__logo">
+        <span class="navbar__logo-symbol">&lt;</span><span class="navbar__logo-name">AMT</span><span class="navbar__logo-symbol">/&gt;</span>
+      </a>
+      <a href="index.html" class="btn btn--outline" style="padding: 8px 18px; font-size: 0.85rem;">
+        ← Ana Sayfaya Dön
+      </a>
     </div>
-</section>
+  </header>
 
-<script>
-    const icons = ['🌐', '🔒', '💻', '📡', '🌐', '🔒', '💻', '📡']; // Kart çiftleri
+  <!-- Game Main -->
+  <main class="container">
+    <div class="game-container">
+      <span class="section__tag">Mini Oyun</span>
+      <h1 class="section__title" style="margin-top: 10px;">Teknoloji Hafıza Kartları</h1>
+      <p style="color: var(--text-secondary); font-size: 0.95rem;">Kartları çevirerek aynı teknoloji sembollerini eşleştir!</p>
+
+      <div class="game-stats">
+        <div class="game-stat-item">
+          <span class="game-stat-label">Hamle</span>
+          <span class="game-stat-val" id="move-count">0</span>
+        </div>
+        <div class="game-stat-item">
+          <span class="game-stat-label">Süre</span>
+          <span class="game-stat-val" id="timer">00:00</span>
+        </div>
+        <div class="game-stat-item">
+          <span class="game-stat-label">Eşleşme</span>
+          <span class="game-stat-val" id="match-count">0 / 8</span>
+        </div>
+      </div>
+
+      <div class="game-grid" id="grid"></div>
+
+      <div class="victory-box" id="victory-box">
+        <h3 class="victory-title">🎉 Tebrikler, Kazandınız!</h3>
+        <p id="victory-desc" style="color: var(--text-secondary); margin-bottom: 16px;">Tüm kartları başarıyla eşleştirdiniz.</p>
+        <button class="btn btn--primary" id="play-again-btn">Yeniden Oyna</button>
+      </div>
+
+      <button class="btn btn--outline" id="restart-btn" style="margin-top: 16px;">
+        🔄 Yeniden Başlat
+      </button>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer style="text-align: center; padding: 24px 0; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-light);">
+    <p>© 2026 Arda Murat Toprak • Kişisel Portfolyo</p>
+  </footer>
+
+  <script>
+    const symbols = ['⚛️', '🌐', '🚀', '⚡', '💻', '🔒', '🎨', '📱'];
+    const cards = [...symbols, ...symbols];
+
     let flippedCards = [];
-    let matchedCount = 0;
-
-    // Kartları karıştır
-    icons.sort(() => 0.5 - Math.random());
+    let matchedPairs = 0;
+    let moves = 0;
+    let timerSeconds = 0;
+    let timerInterval = null;
+    let gameStarted = false;
 
     const grid = document.getElementById('grid');
-    icons.forEach((icon, index) => {
+    const moveCountEl = document.getElementById('move-count');
+    const matchCountEl = document.getElementById('match-count');
+    const timerEl = document.getElementById('timer');
+    const victoryBox = document.getElementById('victory-box');
+    const victoryDesc = document.getElementById('victory-desc');
+    const restartBtn = document.getElementById('restart-btn');
+    const playAgainBtn = document.getElementById('play-again-btn');
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
+      const secs = (seconds % 60).toString().padStart(2, '0');
+      return `${mins}:${secs}`;
+    }
+
+    function startTimer() {
+      if (!gameStarted) {
+        gameStarted = true;
+        timerInterval = setInterval(() => {
+          timerSeconds++;
+          timerEl.textContent = formatTime(timerSeconds);
+        }, 1000);
+      }
+    }
+
+    function initGame() {
+      clearInterval(timerInterval);
+      timerSeconds = 0;
+      moves = 0;
+      matchedPairs = 0;
+      gameStarted = false;
+      flippedCards = [];
+
+      moveCountEl.textContent = '0';
+      matchCountEl.textContent = '0 / 8';
+      timerEl.textContent = '00:00';
+      victoryBox.classList.remove('show');
+
+      grid.innerHTML = '';
+      const shuffled = shuffle([...cards]);
+
+      shuffled.forEach((symbol, index) => {
         const card = document.createElement('div');
-        card.classList.add('card');
-        card.dataset.icon = icon;
+        card.classList.add('memory-card');
+        card.dataset.symbol = symbol;
         card.dataset.index = index;
-        card.addEventListener('click', flipCard);
+
+        card.innerHTML = `
+          <span class="card-back">&lt;/&gt;</span>
+          <span class="card-content">${symbol}</span>
+        `;
+
+        card.addEventListener('click', () => onCardClick(card));
         grid.appendChild(card);
-    });
+      });
+    }
 
-    function flipCard() {
-        if (flippedCards.length < 2 && !this.classList.contains('flipped')) {
-            this.classList.add('flipped');
-            this.innerText = this.dataset.icon;
-            flippedCards.push(this);
+    function onCardClick(card) {
+      if (
+        flippedCards.length === 2 ||
+        card.classList.contains('flipped') ||
+        card.classList.contains('matched')
+      ) {
+        return;
+      }
 
-            if (flippedCards.length === 2) {
-                setTimeout(checkMatch, 500);
-            }
-        }
+      startTimer();
+      card.classList.add('flipped');
+      flippedCards.push(card);
+
+      if (flippedCards.length === 2) {
+        moves++;
+        moveCountEl.textContent = moves;
+        checkMatch();
+      }
     }
 
     function checkMatch() {
-        const [card1, card2] = flippedCards;
-        if (card1.dataset.icon === card2.dataset.icon) {
-            matchedCount += 2;
-            if (matchedCount === icons.length) {
-                document.getElementById('message').style.display = 'block';
-            }
-        } else {
-            card1.classList.remove('flipped');
-            card1.innerText = '';
-            card2.classList.remove('flipped');
-            card2.innerText = '';
-        }
+      const [c1, c2] = flippedCards;
+      if (c1.dataset.symbol === c2.dataset.symbol) {
+        c1.classList.add('matched');
+        c2.classList.add('matched');
+        matchedPairs++;
+        matchCountEl.textContent = `${matchedPairs} / 8`;
         flippedCards = [];
+
+        if (matchedPairs === 8) {
+          clearInterval(timerInterval);
+          setTimeout(() => {
+            victoryDesc.textContent = `${moves} hamlede ve ${formatTime(timerSeconds)} sürede oyunu tamamladınız!`;
+            victoryBox.classList.add('show');
+          }, 400);
+        }
+      } else {
+        setTimeout(() => {
+          c1.classList.remove('flipped');
+          c2.classList.remove('flipped');
+          flippedCards = [];
+        }, 750);
+      }
     }
-</script>
+
+    restartBtn.addEventListener('click', initGame);
+    playAgainBtn.addEventListener('click', initGame);
+
+    initGame();
+  </script>
 </body>
 </html>
