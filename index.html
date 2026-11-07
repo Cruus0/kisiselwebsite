@@ -49,42 +49,9 @@
         scroll-behavior: auto !important;
       }
     }
-    /* Loader critical styles */
-    #loader {
-      position: fixed;
-      inset: 0;
-      z-index: 10000;
-      background: #0a0a0f;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
-    }
-    #loader.hidden {
-      opacity: 0;
-      visibility: hidden;
-    }
-    #loader .loader-ring {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      border: 3px solid #1a1a2e;
-      border-top-color: #6c63ff;
-      border-right-color: #00d4aa;
-      animation: spin 0.8s linear infinite;
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
   </style>
 </head>
 <body>
-
-  <!-- ===================== LOADING OVERLAY ===================== -->
-  <div id="loader" role="status" aria-label="Sayfa yükleniyor">
-    <div class="loader-ring"></div>
-    <span class="sr-only">Yükleniyor...</span>
-  </div>
 
   <!-- ===================== SKIP TO CONTENT ===================== -->
   <a href="#main-content" class="skip-link" data-i18n="skip_link">İçeriğe Geç</a>

@@ -5,33 +5,10 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ==========================================================================
-     1. LOADER DISMISS
-     ========================================================================== */
-  const loader = document.getElementById('loader');
-  if (loader) {
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        loader.classList.add('hidden');
-        setTimeout(() => {
-          loader.style.display = 'none';
-        }, 500);
-      }, 400);
-    });
-
-    // Fallback if load already fired
-    if (document.readyState === 'complete') {
-      setTimeout(() => {
-        loader.classList.add('hidden');
-        setTimeout(() => {
-          loader.style.display = 'none';
-        }, 500);
-      }, 400);
-    }
-  }
+  const backToTopBtn = document.getElementById('back-to-top');
 
   /* ==========================================================================
-     2. INTERNATIONALIZATION (i18n)
+     1. INTERNATIONALIZATION (i18n)
      ========================================================================== */
   let currentLang = 'tr';
 
@@ -464,9 +441,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ==========================================================================
-     7. BACK TO TOP
+     6. BACK TO TOP
      ========================================================================== */
-  const backToTopBtn = document.getElementById('back-to-top');
   if (backToTopBtn) {
     backToTopBtn.addEventListener('click', () => {
       window.scrollTo({
