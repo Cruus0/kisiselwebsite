@@ -119,13 +119,13 @@
           <p class="hero__description" data-i18n="hero_description">İnternet ve Ağ Teknolojileri öğrencisi olarak modern, erişilebilir ve performanslı web deneyimleri oluşturuyorum.</p>
 
           <div class="hero__cta">
-            <a href="#projects" class="btn btn--primary" data-i18n="hero_cta_projects">
+            <a href="#projects" class="btn btn--primary">
               <span class="btn__icon" aria-hidden="true">&#9670;</span>
-              Projelerimi Gör
+              <span data-i18n="hero_cta_projects">Projelerimi Gör</span>
             </a>
-            <a href="#" class="btn btn--outline" data-i18n="hero_cta_cv">
+            <a href="Arda_Murat_Toprak_CV.pdf" download="Arda_Murat_Toprak_CV.pdf" target="_blank" class="btn btn--outline">
               <span class="btn__icon" aria-hidden="true">&#8681;</span>
-              CV İndir
+              <span data-i18n="hero_cta_cv">CV İndir</span>
             </a>
           </div>
         </div>
@@ -497,9 +497,9 @@
             </a>
           </div>
 
-          <!-- Contact Form (Web3Forms - Direct Email Delivery) -->
+          <!-- Contact Form (Web3Forms - Direct In-Page Delivery) -->
           <div class="contact__form-wrapper">
-            <form class="contact-form" id="contact-form" action="https://api.web3forms.com/submit" method="POST" aria-label="İletişim formu">
+            <form class="contact-form" id="contact-form" onsubmit="handleContactFormSubmit(event);" aria-label="İletişim formu">
               <!-- Web3Forms Access Key -->
               <input type="hidden" name="access_key" id="web3forms-key" value="5868ce0f-81ce-493d-9b6d-f2b301497fd7">
               <input type="hidden" name="from_name" value="Portfolyo Ziyaretçisi">
@@ -612,6 +612,6 @@
   </div>
 
   <!-- ===================== SCRIPTS ===================== -->
-  <script src="script.js"></script>
+  <script src="script.js?v=2.2"></script>
 </body>
 </html>

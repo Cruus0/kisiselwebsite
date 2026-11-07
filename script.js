@@ -453,102 +453,122 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ==========================================================================
-     8. CONTACT FORM SUBMISSION (Web3Forms - Direct Delivery)
+     8. CONTACT FORM SUBMISSION (Web3Forms - Direct In-Page Delivery)
      ========================================================================== */
   const contactForm = document.getElementById('contact-form');
   const formStatus = document.getElementById('form-status');
   const web3KeyInput = document.getElementById('web3forms-key');
 
-  if (contactForm) {
-    contactForm.addEventListener('submit', async (e) => {
+  window.handleContactFormSubmit = async function(e) {
+    if (e && e.preventDefault) {
       e.preventDefault();
-      const submitBtn = contactForm.querySelector('.contact-form__submit');
-      const originalBtnHTML = submitBtn.innerHTML;
+      e.stopPropagation();
+    }
 
-      const nameInput = document.getElementById('contact-name');
-      const emailInput = document.getElementById('contact-email');
-      const subjectInput = document.getElementById('contact-subject');
-      const messageInput = document.getElementById('contact-message');
+    const form = document.getElementById('contact-form');
+    if (!form) return false;
 
-      const name = nameInput ? nameInput.value.trim() : '';
-      const email = emailInput ? emailInput.value.trim() : '';
-      const subject = subjectInput ? subjectInput.value.trim() : '';
-      const message = messageInput ? messageInput.value.trim() : '';
-      const accessKey = web3KeyInput ? web3KeyInput.value.trim() : '';
+    const submitBtn = form.querySelector('.contact-form__submit');
+    const originalBtnHTML = submitBtn ? submitBtn.innerHTML : 'Mesaj Gönder';
 
-      if (!name || !message) {
-        if (formStatus) {
-          formStatus.style.display = 'block';
-          formStatus.style.background = 'rgba(239, 68, 68, 0.15)';
-          formStatus.style.color = '#f87171';
-          formStatus.style.border = '1px solid rgba(239, 68, 68, 0.3)';
-          formStatus.textContent = currentLang === 'tr' 
-            ? 'Lütfen en azından İsim ve Mesaj alanlarını doldurunuz.' 
-            : 'Please fill in at least Name and Message fields.';
-        }
-        return;
+    const nameInput = document.getElementById('contact-name');
+    const emailInput = document.getElementById('contact-email');
+    const subjectInput = document.getElementById('contact-subject');
+    const messageInput = document.getElementById('contact-message');
+    const keyInput = document.getElementById('web3forms-key');
+
+    const name = nameInput ? nameInput.value.trim() : '';
+    const email = emailInput ? emailInput.value.trim() : '';
+    const subject = subjectInput ? subjectInput.value.trim() : '';
+    const message = messageInput ? messageInput.value.trim() : '';
+    const accessKey = keyInput ? keyInput.value.trim() : '5868ce0f-81ce-493d-9b6d-f2b301497fd7';
+
+    if (!name || !message) {
+      if (formStatus) {
+        formStatus.style.display = 'block';
+        formStatus.style.background = 'rgba(239, 68, 68, 0.15)';
+        formStatus.style.color = '#f87171';
+        formStatus.style.border = '1px solid rgba(239, 68, 68, 0.3)';
+        formStatus.textContent = currentLang === 'tr' 
+          ? 'Lütfen en azından İsim ve Mesaj alanlarını doldurunuz.' 
+          : 'Please fill in at least Name and Message fields.';
       }
+      return false;
+    }
 
+    if (submitBtn) {
       submitBtn.disabled = true;
       submitBtn.innerHTML = `<span>⏳ ${currentLang === 'tr' ? 'Gönderiliyor...' : 'Sending...'}</span>`;
-      if (formStatus) formStatus.style.display = 'none';
+    }
+    if (formStatus) formStatus.style.display = 'none';
 
-      try {
-        const response = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify({
-            access_key: accessKey,
-            name: name,
-            email: email || 'ziyaretci@portfolyo.com',
-            subject: `Portfolyo İletişim: ${subject || 'Yeni Mesaj'}`,
-            message: message,
-            from_name: name || 'Portfolyo Ziyaretçisi'
-          })
-        });
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: name,
+          email: email || 'ziyaretci@portfolyo.com',
+          subject: `Portfolyo İletişim: ${subject || 'Yeni Mesaj'}`,
+          message: message,
+          from_name: name || 'Portfolyo Ziyaretçisi'
+        })
+      });
 
-        const data = await response.json();
+      const data = await response.json();
 
-        if (response.ok && data.success) {
+      if (response.ok && data.success) {
+        if (submitBtn) {
           submitBtn.innerHTML = `<span>✓ ${currentLang === 'tr' ? 'Mesajınız İletildi!' : 'Message Sent!'}</span>`;
           submitBtn.style.background = 'linear-gradient(135deg, #10b981, #00d4aa)';
-          if (formStatus) {
-            formStatus.style.display = 'block';
-            formStatus.style.background = 'rgba(16, 185, 129, 0.15)';
-            formStatus.style.color = '#34d399';
-            formStatus.style.border = '1px solid rgba(16, 185, 129, 0.3)';
-            formStatus.textContent = currentLang === 'tr'
-              ? 'Mesajınız başarıyla iletildi! Teşekkürler.'
-              : 'Your message has been sent successfully! Thank you.';
-          }
-          contactForm.reset();
+        }
+        if (formStatus) {
+          formStatus.style.display = 'block';
+          formStatus.style.background = 'rgba(16, 185, 129, 0.15)';
+          formStatus.style.color = '#34d399';
+          formStatus.style.border = '1px solid rgba(16, 185, 129, 0.3)';
+          formStatus.textContent = currentLang === 'tr'
+            ? 'Mesajınız başarıyla iletildi! Teşekkürler.'
+            : 'Your message has been sent successfully! Thank you.';
+        }
+        form.reset();
 
-          setTimeout(() => {
+        setTimeout(() => {
+          if (submitBtn) {
             submitBtn.disabled = false;
             submitBtn.innerHTML = originalBtnHTML;
             submitBtn.style.background = '';
-            if (formStatus) formStatus.style.display = 'none';
-          }, 6000);
-        } else {
-          throw new Error(data.message || 'Gönderim başarısız');
-        }
-      } catch (err) {
+          }
+          if (formStatus) formStatus.style.display = 'none';
+        }, 6000);
+      } else {
+        throw new Error(data.message || 'Gönderim başarısız');
+      }
+    } catch (err) {
+      if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalBtnHTML;
-        if (formStatus) {
-          formStatus.style.display = 'block';
-          formStatus.style.background = 'rgba(239, 68, 68, 0.15)';
-          formStatus.style.color = '#f87171';
-          formStatus.style.border = '1px solid rgba(239, 68, 68, 0.3)';
-          formStatus.textContent = currentLang === 'tr'
-            ? 'Mesaj gönderilemedi. Lütfen daha sonra tekrar deneyiniz veya doğrudan e-posta atınız.'
-            : 'Message could not be sent. Please try again later or email directly.';
-        }
       }
-    });
+      if (formStatus) {
+        formStatus.style.display = 'block';
+        formStatus.style.background = 'rgba(239, 68, 68, 0.15)';
+        formStatus.style.color = '#f87171';
+        formStatus.style.border = '1px solid rgba(239, 68, 68, 0.3)';
+        formStatus.textContent = currentLang === 'tr'
+          ? 'Mesaj iletilemedi. Lütfen tekrar deneyiniz.'
+          : 'Message could not be sent. Please try again.';
+      }
+    }
+
+    return false;
+  };
+
+  if (contactForm) {
+    contactForm.addEventListener('submit', window.handleContactFormSubmit);
   }
 
   /* ==========================================================================
