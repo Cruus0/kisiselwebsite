@@ -453,29 +453,89 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ==========================================================================
-     8. CONTACT FORM SUBMISSION (Cosmetic Interaction)
+     8. CONTACT FORM SUBMISSION (Real Delivery via FormSubmit)
      ========================================================================== */
   const contactForm = document.getElementById('contact-form');
+  const formStatus = document.getElementById('form-status');
+
   if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const submitBtn = contactForm.querySelector('.contact-form__submit');
-      const originalText = submitBtn.innerHTML;
+      const originalBtnHTML = submitBtn.innerHTML;
+
+      const nameInput = document.getElementById('contact-name');
+      const emailInput = document.getElementById('contact-email');
+      const subjectInput = document.getElementById('contact-subject');
+      const messageInput = document.getElementById('contact-message');
+
+      const name = nameInput ? nameInput.value.trim() : '';
+      const email = emailInput ? emailInput.value.trim() : '';
+      const subject = subjectInput ? subjectInput.value.trim() : '';
+      const message = messageInput ? messageInput.value.trim() : '';
+
+      if (!name || !email || !message) {
+        if (formStatus) {
+          formStatus.style.display = 'block';
+          formStatus.style.background = 'rgba(239, 68, 68, 0.15)';
+          formStatus.style.color = '#f87171';
+          formStatus.style.border = '1px solid rgba(239, 68, 68, 0.3)';
+          formStatus.textContent = currentLang === 'tr' 
+            ? 'Lütfen gerekli alanları (İsim, E-posta, Mesaj) doldurunuz.' 
+            : 'Please fill in all required fields (Name, Email, Message).';
+        }
+        return;
+      }
 
       submitBtn.disabled = true;
-      submitBtn.innerHTML = `<span>⏳ Gönderiliyor...</span>`;
+      submitBtn.innerHTML = `<span>⏳ ${currentLang === 'tr' ? 'Gönderiliyor...' : 'Sending...'}</span>`;
+      if (formStatus) formStatus.style.display = 'none';
 
-      setTimeout(() => {
-        submitBtn.innerHTML = `<span>✓ Mesajınız Alındı! Teşekkürler.</span>`;
-        submitBtn.style.background = 'linear-gradient(135deg, #10b981, #00d4aa)';
-        contactForm.reset();
+      try {
+        const response = await fetch('https://formsubmit.co/ajax/ardatoprak058@gmail.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            _subject: `Portfolyo Web Sitesinden Yeni Mesaj: ${subject || 'İletişim Formu'}`,
+            message: message,
+            _template: 'table'
+          })
+        });
 
-        setTimeout(() => {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = originalText;
-          submitBtn.style.background = '';
-        }, 3500);
-      }, 1000);
+        const data = await response.json();
+
+        if (response.ok || data.success === 'true' || data.success === true) {
+          submitBtn.innerHTML = `<span>✓ ${currentLang === 'tr' ? 'Mesajınız İletildi!' : 'Message Sent!'}</span>`;
+          submitBtn.style.background = 'linear-gradient(135deg, #10b981, #00d4aa)';
+          if (formStatus) {
+            formStatus.style.display = 'block';
+            formStatus.style.background = 'rgba(16, 185, 129, 0.15)';
+            formStatus.style.color = '#34d399';
+            formStatus.style.border = '1px solid rgba(16, 185, 129, 0.3)';
+            formStatus.textContent = currentLang === 'tr'
+              ? 'Mesajınız başarıyla iletildi! En kısa sürede e-posta ile dönüş yapacağım.'
+              : 'Your message has been sent successfully! I will reply as soon as possible.';
+          }
+          contactForm.reset();
+
+          setTimeout(() => {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnHTML;
+            submitBtn.style.background = '';
+            if (formStatus) formStatus.style.display = 'none';
+          }, 6000);
+        } else {
+          throw new Error('Gönderim başarısız');
+        }
+      } catch (err) {
+        // Fallback: normal form submit if AJAX is blocked
+        contactForm.submit();
+      }
     });
   }
 
