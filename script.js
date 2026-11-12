@@ -53,19 +53,29 @@ document.addEventListener('DOMContentLoaded', () => {
       skill_js_desc: "DOM manipülasyonu, ES6+, async programlama ve interaktif deneyimler.",
       skill_csharp_desc: "OOP prensipleri, .NET framework ve uygulama geliştirme.",
       
-      edu_tag: "Akademik Yolculuğum",
-      edu_title: "Eğitim",
-      edu_badge_current: "Devam Ediyor",
+      edu_tag: "Kariyer & Eğitim",
+      edu_title: "Deneyim ve Eğitim",
+      exp1_badge: "Staj Deneyimi",
+      exp1_company: "Beyoğlu Belediyesi",
+      exp1_role: "Bilgi İşlem Stajyeri — Bilişim Departmanı",
+      exp1_date: "Temmuz 2026 — Eylül 2026",
+      exp1_desc: "Kurum içi donanımların periyodik bakımı, arıza tespiti ve parça değişimi. Windows işletim sistemi kurulumları, sürücü yapılandırmaları ve kurumsal ağ yazıcı/çevre birimleri bağlantı sorunlarının çözümü.",
+      exp2_badge: "Staj Deneyimi",
+      exp2_company: "Şişli Belediyesi",
+      exp2_role: "Bilgi İşlem Stajyeri — Bilgi İşlem Müdürlüğü",
+      exp2_date: "Eylül 2023 — Haziran 2024",
+      exp2_desc: "Bilgisayar teknik servis biriminde yazılım/donanım arızalarına doğrudan müdahale, yerel ağ (LAN) bağlantı testleri, kablolama kontrolleri ve kullanıcılara yerinde/uzaktan teknik destek sağlandı.",
+      edu_badge_current: "Öğrenci",
       edu_uni_name: "Nişantaşı Üniversitesi",
       edu_uni_dept: "İnternet ve Ağ Teknolojileri — Ön Lisans",
-      edu_uni_date: "2024 — Devam Ediyor",
-      edu_uni_desc: "Web geliştirme, ağ altyapıları ve bilgi teknolojileri alanında kapsamlı eğitim. Front-end teknolojilerine odaklanarak projeler geliştiriyorum. Mezuniyet sonrası alanımda kariyer yapmayı ve sürekli öğrenmeyi hedefliyorum.",
+      edu_uni_date: "2024 — 2026",
+      edu_uni_desc: "Web geliştirme, ağ mimarileri ve bilgi teknolojileri alanında kapsamlı eğitim. Front-end teknolojilerine odaklanarak projeler geliştiriyorum.",
       edu_tag_network: "Ağ Teknolojileri",
       edu_badge_goal: "Hedef",
       edu_goal_title: "Sürekli Gelişim",
-      edu_goal_subtitle: "React, TypeScript ve modern frameworkler",
-      edu_goal_date: "2025 ve Sonrası",
-      edu_goal_desc: "React, TypeScript gibi modern teknolojileri öğrenmeye devam ederek full-stack geliştirici olmayı hedefliyorum. Açık kaynak projelere katkıda bulunmak ve sektörde deneyim kazanmak önceliklerim arasında.",
+      edu_goal_subtitle: "React, TypeScript ve modern ekosistemler",
+      edu_goal_date: "2026 ve Sonrası",
+      edu_goal_desc: "React ve TypeScript teknolojilerinde derinleşerek modern full-stack web projeleri üretmek ve açık kaynak ekosistemine katkı sağlamak.",
       
       proj_tag: "Neler Yaptım",
       proj_title: "Projelerim",
@@ -77,6 +87,8 @@ document.addEventListener('DOMContentLoaded', () => {
       proj_play: "Oyna",
       proj_memory_title: "Hafıza Oyunu",
       proj_memory_desc: "Kart eşleştirme mekanikli interaktif hafıza oyunu. Skor takibi, zamanlayıcı ve animasyonlar ile zenginleştirilmiş kullanıcı deneyimi.",
+      proj_wp_title: "WordPress Web Platformu",
+      proj_wp_desc: "WordPress CMS altyapısı kullanılarak geliştirilmiş, dinamik içerik ve blog yönetimi sunan modern web platformu.",
       proj_soon_title: "Yakında...",
       proj_soon_desc: "Yeni projeler üzerinde çalışıyorum. Bu alan yakında güncellenecek. Gelişmeleri takip etmek için bağlantıda kalın!",
       
@@ -142,19 +154,29 @@ document.addEventListener('DOMContentLoaded', () => {
       skill_js_desc: "DOM manipulation, ES6+, async programming, and interactive experiences.",
       skill_csharp_desc: "OOP principles, .NET framework, and application development.",
       
-      edu_tag: "My Academic Journey",
-      edu_title: "Education",
-      edu_badge_current: "Present",
+      edu_tag: "Career & Education",
+      edu_title: "Experience & Education",
+      exp1_badge: "Internship Experience",
+      exp1_company: "Beyoğlu Municipality",
+      exp1_role: "IT Intern — Information Technologies Department",
+      exp1_date: "July 2026 — September 2026",
+      exp1_desc: "Hardware maintenance, diagnostics, and component replacement. Windows OS setup, driver configurations, and resolving network printer and peripheral connectivity issues.",
+      exp2_badge: "Internship Experience",
+      exp2_company: "Şişli Municipality",
+      exp2_role: "IT Intern — IT Directorate",
+      exp2_date: "September 2023 — June 2024",
+      exp2_desc: "Direct intervention in software/hardware troubleshooting at the technical service unit, local network (LAN) connection tests, cabling verifications, and on-site/remote user support.",
+      edu_badge_current: "Student",
       edu_uni_name: "Nişantaşı University",
       edu_uni_dept: "Internet & Network Technologies — Associate Degree",
-      edu_uni_date: "2024 — Present",
-      edu_uni_desc: "Comprehensive education in web development, network infrastructure, and IT. Actively building projects with a focus on modern front-end tech.",
+      edu_uni_date: "2024 — 2026",
+      edu_uni_desc: "Comprehensive education in web development, network architecture, and information technology. Actively building projects with modern front-end technologies.",
       edu_tag_network: "Network Technologies",
       edu_badge_goal: "Goal",
       edu_goal_title: "Continuous Growth",
-      edu_goal_subtitle: "React, TypeScript and modern frameworks",
-      edu_goal_date: "2025 and Beyond",
-      edu_goal_desc: "Advancing toward becoming a full-stack developer by mastering React, TypeScript, and modern ecosystems while contributing to open-source.",
+      edu_goal_subtitle: "React, TypeScript and modern ecosystems",
+      edu_goal_date: "2026 & Beyond",
+      edu_goal_desc: "Deepening expertise in React and TypeScript to develop modern full-stack web projects and contribute to the open-source community.",
       
       proj_tag: "What I've Built",
       proj_title: "Featured Projects",
@@ -166,6 +188,8 @@ document.addEventListener('DOMContentLoaded', () => {
       proj_play: "Play",
       proj_memory_title: "Memory Game",
       proj_memory_desc: "Interactive card-matching memory game with score tracking, timer, and smooth card flipping animations.",
+      proj_wp_title: "WordPress Web Platform",
+      proj_wp_desc: "Modern web platform built using the WordPress CMS infrastructure, offering dynamic content and blog management.",
       proj_soon_title: "Coming Soon...",
       proj_soon_desc: "Working on exciting new projects. This area will be updated soon. Stay tuned!",
       
@@ -244,14 +268,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const roles = {
     tr: [
       "Front-End Developer",
-      "Ağ Teknolojileri Öğrencisi",
-      "Modern Web Arayüz Tasarımcısı",
+      "Ağ & Sistem Destekçisi",
+      "Web Arayüz Geliştirici",
       "UI/UX Meraklısı"
     ],
     en: [
       "Front-End Developer",
-      "Network Tech Student",
-      "Modern Web Interface Creator",
+      "Network & IT Support",
+      "Web Interface Developer",
       "UI/UX Enthusiast"
     ]
   };
@@ -578,6 +602,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const terminalClose = document.getElementById('terminal-close');
   const terminalInput = document.getElementById('terminal-input');
   const terminalOutput = document.getElementById('terminal-output');
+  const mobileTermBtn = document.getElementById('mobile-term-btn');
 
   function openTerminal() {
     if (!terminal) return;
@@ -596,6 +621,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (terminalClose) {
     terminalClose.addEventListener('click', closeTerminal);
+  }
+
+  if (mobileTermBtn) {
+    mobileTermBtn.addEventListener('click', () => {
+      if (terminal.hasAttribute('hidden')) {
+        openTerminal();
+      } else {
+        closeTerminal();
+      }
+    });
   }
 
   window.addEventListener('keydown', (e) => {
@@ -634,9 +669,9 @@ Mevcut Komutlar:
 `,
     whoami: () => "Arda Murat Toprak — Front-End Developer & Nişantaşı Üniv. İnternet ve Ağ Teknolojileri Öğrencisi.",
     skills: () => "HTML5: %90 | CSS3: %80 | JavaScript: %70 | C#: %85",
-    projects: () => "1. Kişisel Portfolio (cruus0.github.io/kisiselwebsite/)\n2. Hafıza Oyunu (blog.html)\n3. Modern Web Projeleri (Yakında)",
-    contact: () => "E-posta: ardatoprak058@gmail.com\nLinkedIn: linkedin.com/in/ardatoprakk/\nTel: +90 539 691 1288",
-    edu: () => "Nişantaşı Üniversitesi — İnternet ve Ağ Teknolojileri (2024 - Devam)",
+    projects: () => "1. Kişisel Portfolio (cruus0.github.io/kisiselwebsite/)\n2. Hafıza Oyunu (blog.html)\n3. WordPress Web Platformu (ardatoprak058.wordpress.com)",
+    contact: () => "E-posta: ardatoprak058@gmail.com\nLinkedIn: linkedin.com/in/ardatoprakk/\nGitHub: github.com/Cruus0\nTel: 0212 258 5858",
+    edu: () => "Nişantaşı Üniversitesi — İnternet ve Ağ Teknolojileri (2024 - 2026)",
     theme: () => "Theme: Midnight Aurora (Electric Indigo #6c63ff + Teal #00d4aa)",
     date: () => new Date().toLocaleString('tr-TR'),
     matrix: () => "Wake up, Neo... Follow the white rabbit. 🐇",

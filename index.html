@@ -18,7 +18,7 @@
   <meta property="og:title" content="Arda Murat Toprak | Front-End Developer">
   <meta property="og:description" content="İnternet ve Ağ Teknolojileri öğrencisi, modern ve erişilebilir web deneyimleri oluşturan Front-End Developer.">
   <meta property="og:image" content="images/ardatoprak.jpg">
-  <meta property="og:url" content="">
+  <meta property="og:url" content="https://cruus0.github.io/kisiselwebsite/">
   <meta property="og:locale" content="tr_TR">
   <meta property="og:site_name" content="Arda Murat Toprak Portfolio">
 
@@ -28,8 +28,8 @@
   <meta name="twitter:description" content="İnternet ve Ağ Teknolojileri öğrencisi, modern ve erişilebilir web deneyimleri oluşturan Front-End Developer.">
   <meta name="twitter:image" content="images/ardatoprak.jpg">
 
-  <!-- Favicon (Emoji Trick) -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+  <!-- Favicon (Clean Vector SVG Monogram) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230a0a0f' stroke='%236c63ff' stroke-width='4'/><text x='50' y='63' font-family='sans-serif' font-weight='800' font-size='38' fill='%2300d4aa' text-anchor='middle'>AMT</text></svg>">
 
   <!-- Google Fonts: Preconnect + Load -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -73,6 +73,9 @@
       </ul>
 
       <div class="navbar__actions">
+        <button class="nav-term-btn" id="mobile-term-btn" type="button" aria-label="Terminali Aç" title="Terminali Aç (T)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+        </button>
         <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Dili değiştir" title="Dili değiştir">
           <span class="lang-toggle__current" id="lang-current">TR</span>
           <span class="lang-toggle__separator">|</span>
@@ -112,7 +115,6 @@
             <span class="hero__name-last">Toprak</span>
           </h1>
           <div class="hero__subtitle" aria-live="polite">
-            <span class="hero__subtitle-static" data-i18n="hero_subtitle_static">Ben bir</span>
             <span class="hero__subtitle-dynamic" id="typed-text"></span>
             <span class="hero__cursor" aria-hidden="true">|</span>
           </div>
@@ -292,26 +294,67 @@
       </div>
     </section>
 
-    <!-- =================== EDUCATION SECTION =================== -->
+    <!-- =================== EDUCATION & EXPERIENCE SECTION =================== -->
     <section class="education section" id="education" aria-labelledby="education-title">
       <div class="container">
         <div class="section__header">
-          <span class="section__tag" data-i18n="edu_tag">Akademik Yolculuğum</span>
-          <h2 class="section__title" id="education-title" data-i18n="edu_title">Eğitim</h2>
+          <span class="section__tag" data-i18n="edu_tag">Kariyer &amp; Eğitim</span>
+          <h2 class="section__title" id="education-title" data-i18n="edu_title">Deneyim ve Eğitim</h2>
           <div class="section__line" aria-hidden="true"></div>
         </div>
 
         <div class="timeline">
+          <!-- Experience 1: Beyoğlu Belediyesi -->
+          <article class="timeline__item" aria-label="Beyoğlu Belediyesi Staj">
+            <div class="timeline__marker" aria-hidden="true">
+              <div class="timeline__marker-dot"></div>
+            </div>
+            <div class="timeline__content">
+              <div class="timeline__badge" data-i18n="exp1_badge">Staj Deneyimi</div>
+              <h3 class="timeline__title" data-i18n="exp1_company">Beyoğlu Belediyesi</h3>
+              <p class="timeline__subtitle" data-i18n="exp1_role">Bilgi İşlem Stajyeri — Bilişim Departmanı</p>
+              <p class="timeline__date" data-i18n="exp1_date">Temmuz 2026 — Eylül 2026</p>
+              <p class="timeline__desc" data-i18n="exp1_desc">Kurum içi donanımların periyodik bakımı, arıza tespiti ve parça değişimi. Windows işletim sistemi kurulumları, sürücü yapılandırmaları ve kurumsal ağ yazıcı/çevre birimleri bağlantı sorunlarının çözümü.</p>
+              <div class="timeline__tags">
+                <span class="timeline__tag">Teknik Destek</span>
+                <span class="timeline__tag">Ağ Yönetimi</span>
+                <span class="timeline__tag">Donanım Bakımı</span>
+                <span class="timeline__tag">Windows Server/OS</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Experience 2: Şişli Belediyesi -->
+          <article class="timeline__item" aria-label="Şişli Belediyesi Staj">
+            <div class="timeline__marker" aria-hidden="true">
+              <div class="timeline__marker-dot"></div>
+            </div>
+            <div class="timeline__content">
+              <div class="timeline__badge" data-i18n="exp2_badge">Staj Deneyimi</div>
+              <h3 class="timeline__title" data-i18n="exp2_company">Şişli Belediyesi</h3>
+              <p class="timeline__subtitle" data-i18n="exp2_role">Bilgi İşlem Stajyeri — Bilgi İşlem Müdürlüğü</p>
+              <p class="timeline__date" data-i18n="exp2_date">Eylül 2023 — Haziran 2024</p>
+              <p class="timeline__desc" data-i18n="exp2_desc">Bilgisayar teknik servis biriminde yazılım/donanım arızalarına doğrudan müdahale, yerel ağ (LAN) bağlantı testleri, kablolama kontrolleri ve kullanıcılara yerinde/uzaktan teknik destek sağlandı.</p>
+              <div class="timeline__tags">
+                <span class="timeline__tag">LAN / Kablolama</span>
+                <span class="timeline__tag">Arıza Giderme</span>
+                <span class="timeline__tag">Teknik Servis</span>
+                <span class="timeline__tag">Kullanıcı Desteği</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Education 1: Nişantaşı Üniversitesi -->
           <article class="timeline__item" aria-label="Üniversite eğitimi">
             <div class="timeline__marker" aria-hidden="true">
               <div class="timeline__marker-dot"></div>
             </div>
             <div class="timeline__content">
-              <div class="timeline__badge" data-i18n="edu_badge_current">Mezun</div>
+              <div class="timeline__badge" data-i18n="edu_badge_current">Öğrenci</div>
               <h3 class="timeline__title" data-i18n="edu_uni_name">Nişantaşı Üniversitesi</h3>
               <p class="timeline__subtitle" data-i18n="edu_uni_dept">İnternet ve Ağ Teknolojileri — Ön Lisans</p>
               <p class="timeline__date" data-i18n="edu_uni_date">2024 — 2026</p>
-              <p class="timeline__desc" data-i18n="edu_uni_desc">Web geliştirme, ağ altyapıları ve bilgi teknolojileri alanında kapsamlı eğitim. Front-end teknolojilerine odaklanarak projeler geliştiriyorum. Mezuniyet sonrası alanımda kariyer yapmayı ve sürekli öğrenmeyi hedefliyorum.</p>
+              <p class="timeline__desc" data-i18n="edu_uni_desc">Web geliştirme, ağ mimarileri ve bilgi teknolojileri alanında kapsamlı eğitim. Front-end teknolojilerine odaklanarak projeler geliştiriyorum.</p>
               <div class="timeline__tags">
                 <span class="timeline__tag">HTML/CSS</span>
                 <span class="timeline__tag">JavaScript</span>
@@ -321,6 +364,7 @@
             </div>
           </article>
 
+          <!-- Future Goals -->
           <article class="timeline__item" aria-label="Gelecek hedefleri">
             <div class="timeline__marker" aria-hidden="true">
               <div class="timeline__marker-dot timeline__marker-dot--future"></div>
@@ -328,9 +372,9 @@
             <div class="timeline__content">
               <div class="timeline__badge timeline__badge--future" data-i18n="edu_badge_goal">Hedef</div>
               <h3 class="timeline__title" data-i18n="edu_goal_title">Sürekli Gelişim</h3>
-              <p class="timeline__subtitle" data-i18n="edu_goal_subtitle">React, TypeScript ve modern frameworkler</p>
-              <p class="timeline__date" data-i18n="edu_goal_date">2025 ve Sonrası</p>
-              <p class="timeline__desc" data-i18n="edu_goal_desc">React, TypeScript gibi modern teknolojileri öğrenmeye devam ederek full-stack geliştirici olmayı hedefliyorum. Açık kaynak projelere katkıda bulunmak ve sektörde deneyim kazanmak önceliklerim arasında.</p>
+              <p class="timeline__subtitle" data-i18n="edu_goal_subtitle">React, TypeScript ve modern ekosistemler</p>
+              <p class="timeline__date" data-i18n="edu_goal_date">2026 ve Sonrası</p>
+              <p class="timeline__desc" data-i18n="edu_goal_desc">React ve TypeScript teknolojilerinde derinleşerek modern full-stack web projeleri üretmek ve açık kaynak ekosistemine katkı sağlamak.</p>
               <div class="timeline__tags">
                 <span class="timeline__tag">React</span>
                 <span class="timeline__tag">TypeScript</span>
@@ -372,11 +416,11 @@
                 <span class="project-card__tag">JavaScript</span>
               </div>
               <div class="project-card__links">
-                <a href="#" class="project-card__link project-card__link--live" aria-label="Portfolio canlı demo" data-i18n="proj_live">
+                <a href="https://cruus0.github.io/kisiselwebsite/" target="_blank" rel="noopener noreferrer" class="project-card__link project-card__link--live" aria-label="Portfolio canlı demo" data-i18n="proj_live">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
                   Canlı Demo
                 </a>
-                <a href="#" class="project-card__link project-card__link--code" aria-label="Portfolio kaynak kodu" data-i18n="proj_code">
+                <a href="https://github.com/Cruus0/kisiselwebsite" target="_blank" rel="noopener noreferrer" class="project-card__link project-card__link--code" aria-label="Portfolio kaynak kodu" data-i18n="proj_code">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
                   Kaynak Kod
                 </a>
@@ -407,7 +451,7 @@
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                   Oyna
                 </a>
-                <a href="#" class="project-card__link project-card__link--code" aria-label="Hafıza Oyunu kaynak kodu" data-i18n="proj_code">
+                <a href="https://github.com/Cruus0/kisiselwebsite/blob/main/blog.html" target="_blank" rel="noopener noreferrer" class="project-card__link project-card__link--code" aria-label="Hafıza Oyunu kaynak kodu" data-i18n="proj_code">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
                   Kaynak Kod
                 </a>
@@ -415,18 +459,29 @@
             </div>
           </article>
 
-          <!-- Project 3: Coming Soon Placeholder -->
-          <article class="project-card project-card--coming" aria-label="Yakında gelecek proje">
+          <!-- Project 3: WordPress Web Platformu -->
+          <article class="project-card" aria-label="WordPress Web Sitesi Projesi">
             <div class="project-card__image-wrapper">
-              <div class="project-card__image-placeholder project-card__image-placeholder--soon" aria-hidden="true">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              <div class="project-card__image-placeholder" aria-hidden="true">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+              </div>
+              <div class="project-card__overlay">
+                <span class="project-card__view" data-i18n="proj_view">Projeyi İncele</span>
               </div>
             </div>
             <div class="project-card__body">
-              <h3 class="project-card__title" data-i18n="proj_soon_title">Yakında...</h3>
-              <p class="project-card__desc" data-i18n="proj_soon_desc">Yeni projeler üzerinde çalışıyorum. Bu alan yakında güncellenecek. Gelişmeleri takip etmek için bağlantıda kalın!</p>
+              <h3 class="project-card__title" data-i18n="proj_wp_title">WordPress Web Platformu</h3>
+              <p class="project-card__desc" data-i18n="proj_wp_desc">WordPress CMS altyapısı kullanılarak geliştirilmiş, dinamik içerik ve blog yönetimi sunan modern web platformu.</p>
               <div class="project-card__tags">
-                <span class="project-card__tag project-card__tag--soon">???</span>
+                <span class="project-card__tag">WordPress</span>
+                <span class="project-card__tag">CMS</span>
+                <span class="project-card__tag">Web Design</span>
+              </div>
+              <div class="project-card__links">
+                <a href="https://ardatoprak058.wordpress.com" target="_blank" rel="noopener noreferrer" class="project-card__link project-card__link--live" aria-label="WordPress sitesi canlı demo" data-i18n="proj_live">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                  Canlı Demo
+                </a>
               </div>
             </div>
           </article>
@@ -486,13 +541,13 @@
               </div>
             </a>
 
-            <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="contact-card" aria-label="GitHub profili">
+            <a href="https://github.com/Cruus0" target="_blank" rel="noopener noreferrer" class="contact-card" aria-label="GitHub profili: Cruus0">
               <div class="contact-card__icon" aria-hidden="true">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
               </div>
               <div class="contact-card__text">
                 <span class="contact-card__label">GitHub</span>
-                <span class="contact-card__value" data-i18n="contact_github_val">Profili Ziyaret Et</span>
+                <span class="contact-card__value">github.com/Cruus0</span>
               </div>
             </a>
           </div>
@@ -567,7 +622,7 @@
             <a href="https://linkedin.com/in/ardatoprakk/" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
             </a>
-            <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub">
+            <a href="https://github.com/Cruus0" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="GitHub profili: Cruus0">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
             </a>
             <a href="mailto:ardatoprak058@gmail.com" class="footer__social-link" aria-label="E-posta">
@@ -578,7 +633,7 @@
       </div>
 
       <div class="footer__bottom">
-        <p class="footer__copyright" data-i18n="footer_copyright">&copy; 2025 Arda Murat Toprak. Tüm hakları saklıdır.</p>
+        <p class="footer__copyright" data-i18n="footer_copyright">&copy; 2026 Arda Murat Toprak. Tüm hakları saklıdır.</p>
         <p class="footer__made" data-i18n="footer_made">
           <span aria-hidden="true">&#9825;</span> ile Türkiye'den yapıldı
         </p>

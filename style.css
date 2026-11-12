@@ -16,8 +16,8 @@
   --accent-gradient-glow: linear-gradient(135deg, rgba(108, 99, 255, 0.4), rgba(0, 212, 170, 0.4));
   
   --text-primary: #f0f0f5;
-  --text-secondary: #9ca3af;
-  --text-muted: #6b7280;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
   
   --border-light: rgba(255, 255, 255, 0.08);
   --border-accent: rgba(108, 99, 255, 0.25);
@@ -324,14 +324,38 @@ button, input, textarea {
 .navbar__actions {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
+}
+
+.nav-term-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-light);
+  color: var(--accent-secondary);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+.nav-term-btn:hover {
+  background: rgba(0, 212, 170, 0.15);
+  border-color: var(--accent-secondary);
+  color: #fff;
+  transform: translateY(-2px);
 }
 
 .lang-toggle {
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  padding: 6px 14px;
+  padding: 8px 16px;
+  min-height: 40px;
   border-radius: var(--radius-full);
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--border-light);
