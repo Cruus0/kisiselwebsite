@@ -328,8 +328,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const navLinks = document.querySelectorAll('.navbar__link');
   const sections = document.querySelectorAll('section[id]');
   let lastScrollY = window.scrollY;
+  let scrollTicking = false;
 
-  window.addEventListener('scroll', () => {
+  function handleScroll() {
     const currentY = window.scrollY;
 
     // Background blur & shadow on scroll
@@ -373,6 +374,16 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         backToTopBtn.classList.remove('visible');
       }
+    }
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!scrollTicking) {
+      window.requestAnimationFrame(() => {
+        handleScroll();
+        scrollTicking = false;
+      });
+      scrollTicking = true;
     }
   }, { passive: true });
 
@@ -656,9 +667,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const commands = {
     help: () => `
 Mevcut Komutlar:
-  • whoami    : Profil bilgisi
+  • whoami    : Profil ve geliştirici kimliği
   • skills    : Yetkinlik özeti
-  • projects  : Projeler listesi
+  • projects  : Geliştirilen öne çıkan projeler
+  • tools     : Geliştirme araçları ve ajan ekosistemi
   • contact   : İletişim bilgileri
   • edu       : Eğitim bilgisi
   • clear     : Ekranı temizle
@@ -670,13 +682,14 @@ Mevcut Komutlar:
     whoami: () => "Arda Murat Toprak — Front-End Developer & Nişantaşı Üniv. İnternet ve Ağ Teknolojileri Öğrencisi.",
     skills: () => "HTML5: %90 | CSS3: %80 | JavaScript: %70 | C#: %85",
     projects: () => "1. Kişisel Portfolio (cruus0.github.io/kisiselwebsite/)\n2. Hafıza Oyunu (blog.html)\n3. WordPress Web Platformu (ardatoprak058.wordpress.com)",
+    tools: () => "Stack & Tools: Graphify (AST Knowledge Graph), Modern Web Standards, 21st.dev, Framer Motion, Superpowers & gstack",
     contact: () => "E-posta: ardatoprak058@gmail.com\nLinkedIn: linkedin.com/in/ardatoprakk/\nGitHub: github.com/Cruus0\nTel: 0212 258 5858",
     edu: () => "Nişantaşı Üniversitesi — İnternet ve Ağ Teknolojileri (2024 - 2026)",
-    theme: () => "Theme: Midnight Aurora (Electric Indigo #6c63ff + Teal #00d4aa)",
+    theme: () => "Theme: Midnight Aurora (Electric Indigo #6c63ff + Cyan Teal #00d4aa)",
     date: () => new Date().toLocaleString('tr-TR'),
-    matrix: () => "Wake up, Neo... Follow the white rabbit. 🐇",
+    matrix: () => "Wake up, Neo... The Matrix has you. Follow the white rabbit. 🐇🟢",
     clear: () => {
-      terminalOutput.innerHTML = '';
+      terminalOutput.replaceChildren();
       return '';
     },
     exit: () => {
@@ -687,10 +700,10 @@ Mevcut Komutlar:
 
   if (terminalInput) {
     // Initial welcome message
-    terminalOutput.innerHTML = `<div>&gt; Arda Toprak Terminal v2.0</div><div>&gt; Komut listesi için <span style="color:#00d4aa;">'help'</span> yazabilirsiniz.</div><br>`;
+    terminalOutput.innerHTML = `<div>&gt; Arda Toprak Terminal v2.5</div><div>&gt; Komut listesi için <span style="color:#00d4aa;">'help'</span> yazabilirsiniz.</div><br>`;
 
     terminalInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
+      if (e.key === 'Enter' && !e.isComposing) {
         const cmd = terminalInput.value.trim().toLowerCase();
         terminalInput.value = '';
 
